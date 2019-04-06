@@ -1,5 +1,14 @@
-const express = require('express');
+const userRoutes = require('./api/routes/users')
 
-const app = express();
+class UserLogin
+{
+    initialize(expressApp){
+        this.express = expressApp;
+        console.log('userLogin Library is imported');
+        this.express.use('/users',userRoutes);
+    }
 
-module.export = app;
+
+}
+
+module.exports =new UserLogin();
