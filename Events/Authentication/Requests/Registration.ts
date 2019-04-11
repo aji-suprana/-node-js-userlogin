@@ -2,16 +2,18 @@ const User = require('../models/user');
 const mongoose =require('mongoose');
 const bcrypt = require('bcrypt')
 
-const ResponseHelper = require('../../Utilities/ResponseHelper')
-const responseHelper = new ResponseHelper("Registration",res,req);
+import {ResponseHelper} from '../../Utilities/ResponseHelper'
+import {Response} from "express-serve-static-core";
+import {Request} from "express-serve-static-core";
+import {NextFunction} from "express-serve-static-core";
 
-
-module.exports = function Registration(req,res,next) {
+module.exports = function Registration(req:Request,res:Response,next:NextFunction) {
+    const responseHelper = new ResponseHelper("Registration",res,req);
     console.log(responseHelper.JsonRequest_Succeded())
 
     User.find({"email":req.body.email})
     .exec()
-    .then(user=>{
+    .then(function(user:any){
         //if mail existed
         if(user.length >= 1){
             return responseHelper.HTTP_UnprocessableEntity(
@@ -29,7 +31,7 @@ module.exports = function Registration(req,res,next) {
 
         //Encrypting input password
         bcrypt.hash(req.body.password,10,
-            (err,hash)=>{
+            (err:any,hash:string)=>{
                 if(err){return responseHelper.HTTP_UnprocessableEntity(err);}
 
                 const userModel = new User({
@@ -39,14 +41,14 @@ module.exports = function Registration(req,res,next) {
                 })
         
                 userModel.save()
-                .then(result=>{
+                .then(function(result:any){
                     responseHelper.HTTP_OK(result);
                 })
-                .catch(err=>{
+                .catch(function(err:any){
                     responseHelper.HTTP_InternalServerError(err);
                 })
             }
         );
     })
-    .catch(err=>{responseHelper.HTTP_InternalServerError(err);})
+    .catch(function(err:any){responseHelper.HTTP_InternalServerError(err);})
  } 

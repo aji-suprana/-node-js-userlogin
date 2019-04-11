@@ -11,7 +11,7 @@ export = class RequestGroup{
 
     //http://<url>/[requestGroupPath]/
     requestGroupPath:string = 'null';
-    constructor(expressApp: express.Application ,_requestGroupPath:string){
+    Initialize(expressApp: express.Application ,_requestGroupPath:string){
         this.expressApp = expressApp;
         this.requestGroupPath = "/"+ _requestGroupPath;
         console.log("Request Group "+this.requestGroupPath + " Initialized");

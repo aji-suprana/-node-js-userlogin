@@ -2,8 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const app = express();
-const errorHandler = require("./errorHandler/ErrorHandler")
-const authentication = require("./Authentication/main")
+const errorHandler = require("./build/ErrorHandler/ErrorHandler")
+const authentication = require("./build/Authentication/main")
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 

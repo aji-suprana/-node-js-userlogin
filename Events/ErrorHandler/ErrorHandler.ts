@@ -1,14 +1,19 @@
+import express = require('express');
+import * as core from "express-serve-static-core";
+import {Response} from "express-serve-static-core";
+import {Request} from "express-serve-static-core";
+import {NextFunction} from "express-serve-static-core";
 
 class ErrorHandler {
-    Initialize(expressApp) {
-        this.express = expressApp;
-        console.log( this.name + " class is initialized");
+    expressApp:express.Application = express();
+    Initialize(e: core.Express) {
+        this.expressApp = e;
         this.RoutesHandler();
     }
 
     RoutesHandler() {
         //Prevent CORS ERROR
-        this.express.use((req, res, next) => {
+        this.expressApp.use((req, res, next) => {
             res.header('Access-Control-Allow-Origin', '*');
             res.header('Access-Control-Allow-Headers',
                 'Origin,X-Requested-With, Content-Type,Accept,Authorization'
@@ -19,14 +24,17 @@ class ErrorHandler {
             }
             next();
         });
+
+        
         //Handling all Errors
-        this.express.use((req, res, next) => {
-            const error = new Error('Not found');
+        this.expressApp.use((req, res, next) => {
+            let error:any;
+            error = new Error('Not found');
             error.status = 404;
             next(error);
         })
 
-        this.express.use((error, req, res, next) => {
+        this.expressApp.use((error:any, req:Request, res:Response, next:NextFunction) => {
             res.status(error.status || 500);
             res.json({
                 error: {
@@ -39,5 +47,5 @@ class ErrorHandler {
 }
 
 var classInstance = new ErrorHandler();
-var name = classInstance.name;
+var name = classInstance.constructor.name;
 module.exports = classInstance;

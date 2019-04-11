@@ -1,7 +1,7 @@
 import {Response} from "express-serve-static-core";
 import {Request} from "express-serve-static-core";
 
-export = class ResponseHelper{
+export class ResponseHelper{
     RequestName:string = "none";
     responseBody:Response;
     requestBody:Request;
