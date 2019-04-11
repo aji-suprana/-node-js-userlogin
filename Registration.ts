@@ -1,5 +1,5 @@
 
-const mongoose =require('mongoose');
+const mongoose = require('mongoose');
 const bcrypt = require('bcrypt')
 
 import {ResponseHelper} from "../Engine/index"
