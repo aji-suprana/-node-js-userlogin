@@ -1,13 +1,14 @@
-const User = require('../models/user');
+
 const mongoose =require('mongoose');
 const bcrypt = require('bcrypt')
 
-import {ResponseHelper} from '../../Utilities/ResponseHelper'
+import {ResponseHelper} from "../Engine/index"
 import {Response} from "express-serve-static-core";
 import {Request} from "express-serve-static-core";
 import {NextFunction} from "express-serve-static-core";
+import User, { IUser } from './Models/user';
 
-module.exports = function Registration(req:Request,res:Response,next:NextFunction) {
+export function Registration(req:Request,res:Response,next:NextFunction) {
     const responseHelper = new ResponseHelper("Registration",res,req);
     console.log(responseHelper.JsonRequest_Succeded())
 

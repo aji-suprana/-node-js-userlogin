@@ -1,6 +1,12 @@
-var mongoose = require('mongoose');
+import mongoose,{Schema,Document} from 'mongoose'
 
-var userSchema = new mongoose.Schema({
+export interface IUser extends Document{
+  _id:mongoose.Schema.Types.ObjectId,
+  email:string,
+  password:string
+}
+
+let userSchema = new Schema({
   _id:mongoose.Schema.Types.ObjectId,
   email:{
       type: String,
@@ -11,4 +17,4 @@ var userSchema = new mongoose.Schema({
   password:{ type: String, required:true}
 });
 
-module.exports = mongoose.model('User', userSchema);
+export default mongoose.model<IUser>('User', userSchema);
