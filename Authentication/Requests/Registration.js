@@ -3,15 +3,12 @@ const mongoose =require('mongoose');
 const bcrypt = require('bcrypt')
 
 const ResponseHelper = require('../../Utilities/ResponseHelper')
-
+const responseHelper = new ResponseHelper("Registration",res,req);
 
 
 module.exports = function Registration(req,res,next) {
-    responseHelper = new ResponseHelper("Registration",res,req);
-
     console.log(responseHelper.JsonRequest_Succeded())
-    // function body
-    // optional return; 
+
     User.find({"email":req.body.email})
     .exec()
     .then(user=>{

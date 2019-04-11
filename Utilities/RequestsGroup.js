@@ -3,18 +3,16 @@ var express = require("express");
 var HTTPMethodType_1 = require("./HTTPMethodType");
 var router = require('express').Router();
 module.exports = /** @class */ (function () {
-    function RequestGroup() {
+    function RequestGroup(expressApp, _requestGroupPath) {
         this.expressApp = express();
         //http://<url>/[requestGroupPath]/
         this.requestGroupPath = 'null';
-    }
-    RequestGroup.prototype.Initialize = function (expressApp, _requestGroupPath) {
         this.expressApp = expressApp;
         this.requestGroupPath = "/" + _requestGroupPath;
         console.log("Request Group " + this.requestGroupPath + " Initialized");
         this.RegisterHTTPMethods();
         this.RoutesHandler();
-    };
+    }
     RequestGroup.prototype.RegisterHTTPMethods = function () {
         throw "Request Group Child Classes have to implement RegisterHTTPMethods() method";
     };
