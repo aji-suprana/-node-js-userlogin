@@ -1,8 +1,8 @@
 
 class ErrorHandler {
-    initialize(expressApp) {
+    Initialize(expressApp) {
         this.express = expressApp;
-        console.log('ErrorHandler class is initialized');
+        console.log( this.name + " class is initialized");
         this.RoutesHandler();
     }
 
@@ -38,4 +38,6 @@ class ErrorHandler {
     }
 }
 
-module.exports = new ErrorHandler();
+var classInstance = new ErrorHandler();
+var name = classInstance.name;
+module.exports = classInstance;

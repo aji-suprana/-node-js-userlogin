@@ -1,17 +1,20 @@
 const express = require('express');
 const mongoose = require('mongoose');
-
+const bodyParser = require('body-parser');
 const app = express();
-const userLogin = require('./userlogin/userlogin');
 const errorHandler = require("./errorHandler/ErrorHandler")
+const authentication = require("./Authentication/main")
+app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.json());
 
-userLogin.initialize(app);
-errorHandler.initialize(app);
+authentication.Initialize(app,"authentication");
+errorHandler.Initialize(app);
 
 mongoose.connect(
     //"mongodb+srv://quest_god:QuestGod1@questgod-ftvdm.mongodb.net/test?retryWrites=true"
     "mongodb+srv://quest_god:"+
-    process.env.MONGO_ATLAS_PW+
+    //process.env.MONGO_ATLAS_PW+
+    "QuestGod1"+
     "@questgod-ftvdm.mongodb.net/test?retryWrites=true",
     {
        useNewUrlParser: true
@@ -19,5 +22,7 @@ mongoose.connect(
 );
 
 //mongodb+srv://quest_god:<password>@questgod-ftvdm.mongodb.net/test?retryWrites=true
+
+
 
 module.exports = app;
