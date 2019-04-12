@@ -2,10 +2,12 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt')
 
-import {ResponseHelper} from "../Engine/index"
+
 import {Response} from "express-serve-static-core";
 import {Request} from "express-serve-static-core";
 import {NextFunction} from "express-serve-static-core";
+
+import {ResponseHelper} from "../Engine/index"
 import User, { IUser } from './Models/user';
 
 export function Registration(req:Request,res:Response,next:NextFunction) {
@@ -43,7 +45,7 @@ export function Registration(req:Request,res:Response,next:NextFunction) {
         
                 userModel.save()
                 .then(function(result:any){
-                    responseHelper.HTTP_OK(result);
+                    responseHelper.HTTP_OK_DocResponse(result);
                 })
                 .catch(function(err:any){
                     responseHelper.HTTP_InternalServerError(err);
