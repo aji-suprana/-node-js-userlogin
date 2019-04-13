@@ -1,8 +1,6 @@
-
-const mongoose = require('mongoose');
 const bcrypt = require('bcrypt')
 
-
+import mongoose,{Document} from 'mongoose'
 import {Response} from "express-serve-static-core";
 import {Request} from "express-serve-static-core";
 import {NextFunction} from "express-serve-static-core";
@@ -12,7 +10,7 @@ import User, { IUser } from './Models/user';
 
 export function Registration(req:Request,res:Response,next:NextFunction) {
     const responseHelper = new ResponseHelper("Registration",res,req);
-    console.log(responseHelper.JsonRequest_Succeded())
+    responseHelper.JsonRequest_Succeded()
 
     User.find({"email":req.body.email})
     .exec()
@@ -32,6 +30,8 @@ export function Registration(req:Request,res:Response,next:NextFunction) {
             );
         }
 
+        const role =
+
         //Encrypting input password
         bcrypt.hash(req.body.password,10,
             (err:any,hash:string)=>{
@@ -44,7 +44,7 @@ export function Registration(req:Request,res:Response,next:NextFunction) {
                 })
         
                 userModel.save()
-                .then(function(result:any){
+                .then(function(result:Document){
                     responseHelper.HTTP_OK_DocResponse(result);
                 })
                 .catch(function(err:any){

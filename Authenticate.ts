@@ -1,5 +1,6 @@
-const mongoose = require('mongoose');
 const bcrypt = require('bcrypt')
+
+import mongoose,{Document} from 'mongoose'
 
 import {Response} from "express-serve-static-core";
 import {Request} from "express-serve-static-core";
@@ -8,8 +9,11 @@ import {NextFunction} from "express-serve-static-core";
 import {ResponseHelper} from "../Engine/index"
 import User, { IUser } from './Models/user';
 
+//jsonwebtoken
+import  * as jwt from 'jsonwebtoken'
+
 export function Authenticate(req:Request,res:Response,next:NextFunction) {
-    const responseHelper = new ResponseHelper("Registration",res,req);
+    const responseHelper = new ResponseHelper("Authenticate",res,req);
     console.log(responseHelper.JsonRequest_Succeded())
 
     User.find({email: req.body.email})
@@ -23,7 +27,18 @@ export function Authenticate(req:Request,res:Response,next:NextFunction) {
             var tempBool = CheckIfPasswordIsCorrect(err,result);
 
             if(tempBool){
-                return responseHelper.HTTP_OK_StringResponse("Authentication Successfull!");
+                const jwtToken = jwt.sign({
+                    email: user[0].email,
+                    userId: user[0]._id
+                },
+                "ajisuprana",
+                {
+                    expiresIn: "1h"
+                })
+                return responseHelper.HTTP_OK_JSONResponse({
+                    success: "Authentication Successfull!",
+                    token : jwtToken
+                });
             }else{
                 return responseHelper.HTTP_Unauthorized("Authentication failed!");
             }

@@ -8,17 +8,17 @@ import {RequestGroup} from'../Engine/index'
 import {Registration} from "./Registration"
 import {Authenticate} from "./Authenticate"
 
-export class Authentication extends RequestGroup
+export class RG_Authentication extends RequestGroup
 {
-    private static instance:Authentication;
+    private static instance:RG_Authentication;
 
     getInstance()
     {
-        if(!Authentication.instance){
-            Authentication.instance = new Authentication("authentication");
+        if(!RG_Authentication.instance){
+            RG_Authentication.instance = new RG_Authentication("authentication");
         }
 
-        return Authentication.instance;
+        return RG_Authentication.instance;
     }
 
     RegisterHTTPMethods()
